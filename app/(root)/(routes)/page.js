@@ -1,0 +1,10 @@
+import ThreadForm from '@/components/ThreadForm';
+
+
+export default function Home() {
+  return (
+    <div className='flex flex-col flex-1 mt-14 w-full px-4'>
+      <ThreadForm />
+    </div>
+  );
+}
