@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { Paperclip } from "lucide-react";
 import Image from "next/image";
+import { toast } from "sonner";
 
-const MediaUpload = ({ value, onChange }) => {
+const MediaUpload = ({ value, onChange,setMedias }) => {
   const [mediaFiles, setMediaFiles] = useState([]);
   const [mounted, setMounted] = useState(false);
 
@@ -17,7 +18,7 @@ const MediaUpload = ({ value, onChange }) => {
    const { files } = e.target;
 
    if (files.length > 4) {
-     console.log("You can only upload 4 files at a time.");
+     toast.error("You can only upload 4 files at a time.");
      return;
    }
 
@@ -29,13 +30,13 @@ const MediaUpload = ({ value, onChange }) => {
          const reader = new FileReader();
 
          if (file.type.startsWith("image/") && file.size > maxImageSize) {
-           console.log(`Image ${file.name} exceeds the maximum size limit.`);
+           toast.error(`Image ${file.name} exceeds the maximum size limit.`);
            resolve(null); // Resolve with null to skip this file
            return;
          }
 
          if (file.type.startsWith("video/") && file.size > maxVideoSize) {
-           console.log(`Video ${file.name} exceeds the maximum size limit.`);
+           toast.error(`Video ${file.name} exceeds the maximum size limit.`);
            resolve(null); // Resolve with null to skip this file
            return;
          }
@@ -54,6 +55,7 @@ const MediaUpload = ({ value, onChange }) => {
    // Filter out null values (skipped files) and update the parent component
    const validMedia = processedMedia.filter((media) => media !== null);
    onChange(validMedia);
+   setMedias(validMedia);
  };
 
   const removeMedia = (index) => {

@@ -6,7 +6,6 @@ import "swiper/css/navigation";
 import Image from "next/image";
 
 const ImagePreviews = ({ media }) => {
-  console.log(media);
   return (
     <div className='mx-auto container mt-3 sm:mt-0'>
       <Swiper
@@ -17,9 +16,9 @@ const ImagePreviews = ({ media }) => {
           // 1260: { slidesPerView: 3, spaceBetween: 32 },
         }}
         navigation>
-        {media.map((media) => (
+        {media.map((media, i) => (
           <div
-            key={media.url}
+            key={i}
             className='aspect-square relative h-full w-full shadow-sm overflow-hidden'>
             {media.type.includes("image/") ? (
               <>
@@ -29,12 +28,28 @@ const ImagePreviews = ({ media }) => {
                       alt={media.url}
                       src={media.url}
                       fill
-                      className='object-contain'
+                      className='object-contain rounded-md'
                     />
                   </div>
                 </SwiperSlide>
               </>
-            ) : null}
+            ) : (
+              <>
+                <SwiperSlide>
+                  <div className='aspect-square relative h-full w-full shadow-sm overflow-hidden'>
+                    <video
+                      controls
+                      autoPlay
+                      muted
+                      loop
+                      className='rounded-md h-full w-full'>
+                      <source src={media.url} type={media.type} />
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                </SwiperSlide>
+              </>
+            )}
           </div>
         ))}
       </Swiper>

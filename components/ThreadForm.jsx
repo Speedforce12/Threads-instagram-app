@@ -38,6 +38,7 @@ const threadSchema = z.object({
 const ThreadForm = () => {
   const [input, setInput] = useState("");
   const textbox = useRef(null);
+  const [medias, setMedias] = useState([])
   const { user } = useUser();
 
   const form = useForm({
@@ -124,6 +125,7 @@ const ThreadForm = () => {
                   <MediaUpload
                     value={field.value}
                     onChange={(media) => form.setValue("media", media)}
+                    setMedias={setMedias}
                   />
                 </FormControl>
               </FormItem>
@@ -176,8 +178,7 @@ const ThreadForm = () => {
           />
         </div>
       </form>
-
-      <ImagePreviews media={form.watch("media")} />
+        <ImagePreviews media={medias} />
     </Form>
   );
 };

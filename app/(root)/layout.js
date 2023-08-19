@@ -5,6 +5,7 @@ import NavBar from "@/components/NavBar";
 import Sidebar from "@/components/Sidebar";
 import RightBar from "@/components/RightBar";
 import BottomBar from "@/components/BottomBar";
+import ToastProvider from "@/providers/toastProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,12 +18,13 @@ export default async function RootLayout({ children }) {
   const user = await currentUser();
   const userId = user?.id;
   const userImage = user?.imageUrl;
-  
+
   return (
     <ClerkProvider>
       <html lang='en'>
         <body className={inter.className}>
           <NavBar />
+          <ToastProvider />
           <div className='flex flex-row'>
             <Sidebar userId={userId} userImage={userImage} />
             <main className='flex min-h-screen flex-1 flex-col items-center overflow-auto'>
