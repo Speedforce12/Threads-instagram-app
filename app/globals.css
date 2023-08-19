@@ -75,3 +75,13 @@
     @apply bg-black;
   }
 }
+
+/* .swiper-button-next,
+.swiper-button-prev {
+  background-color: gray;
+  padding: 8px 8px;
+  border-radius: 100%;
+  border: 2px solid black;
+  width: 10px;
+  height: 10px;
+} */

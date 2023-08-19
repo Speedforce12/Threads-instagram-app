@@ -3,73 +3,86 @@
 import { useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { Paperclip } from "lucide-react";
+import Image from "next/image";
 
 const MediaUpload = ({ value, onChange }) => {
   const [mediaFiles, setMediaFiles] = useState([]);
+  const [mounted, setMounted] = useState(false);
+
   const maxImageSize = 5 * 1024 * 1024;
   const maxVideoSize = 512 * 1024 * 1024;
 
-  // const [mounted, setMounted] = useState(false)
-
-  const handleMedia = (e) => {
-    
+ const handleMedia = async (e) => {
+   e.preventDefault();
    const { files } = e.target;
-    const reader = new FileReader();
 
-    // Loop through the selected files
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
+   if (files.length > 4) {
+     console.log("You can only upload 4 files at a time.");
+     return;
+   }
 
-      if (file.type.startsWith('image/') && file.size > maxImageSize) {
-        console.log(`Image ${file.name} exceeds the maximum size limit.`);
-        continue; // Skip this file and move to the next
-      }
+   // Use Promise.all to read and process files asynchronously
+   const processedMedia = await Promise.all(
+     Array.from(files).map(async (file) => {
+       // Create a Promise to handle file reading
+       return new Promise((resolve, reject) => {
+         const reader = new FileReader();
 
-      if (file.type.startsWith('video/') && file.size > maxVideoSize) {
-        console.log(`Video ${file.name} exceeds the maximum size limit.`);
-        continue; // Skip this file and move to the next
-      }
+         if (file.type.startsWith("image/") && file.size > maxImageSize) {
+           console.log(`Image ${file.name} exceeds the maximum size limit.`);
+           resolve(null); // Resolve with null to skip this file
+           return;
+         }
 
-      reader.readAsDataURL(file);
+         if (file.type.startsWith("video/") && file.size > maxVideoSize) {
+           console.log(`Video ${file.name} exceeds the maximum size limit.`);
+           resolve(null); // Resolve with null to skip this file
+           return;
+         }
 
-      // Define an event listener for when the reader finishes loading
-      reader.onload = () => {
-        setMediaFiles((prevMediaFiles) => [...prevMediaFiles, { type: file.type, dataUrl: reader.result }]);
-      };
-    }
+         // Define an event listener for when the reader finishes loading
+         reader.onload = () => {
+           resolve({ type: file.type, url: reader.result });
+         };
 
-    onChange(mediaFiles)
+         // Start reading the file
+         reader.readAsDataURL(file);
+       });
+     })
+   );
+
+   // Filter out null values (skipped files) and update the parent component
+   const validMedia = processedMedia.filter((media) => media !== null);
+   onChange(validMedia);
+ };
+
+  const removeMedia = (index) => {
+    setMediaFiles((prevMediaFiles) =>
+      prevMediaFiles.filter((_, i) => i !== index)
+    );
   };
 
-    const removeMedia = (index) => {
-      setMediaFiles((prevMediaFiles) =>
-        prevMediaFiles.filter((_, i) => i !== index),
-      );
-    };
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  // useEffect(() => {
-  //   setMounted(true);
-  // }, [])
-
-  // if (!mounted) {
-  //   return null
-  // }
+  if (!mounted) return null;
 
   return (
-    <div
-      htmlFor="media"
-      className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-neutral-800"
-    >
-      <Paperclip className="h-5 w-5 cursor-pointer text-white  hover:font-bold hover:scale-90 transition-all duration-200 ease-in" />
-      <Input
-        id="media"
-        accept="file"
-        className="hidden"
-        type="file"
-        multiple
-        value={value}
-        onChange={handleMedia}
-      />
+    <div className='w-full '>
+      <label
+        htmlFor='media'
+        className='flex h-8 w-8 items-center justify-center rounded-full hover:bg-neutral-800'>
+        <Paperclip className='h-5 w-5 cursor-pointer text-white hover:font-bold hover:scale-90 transition-all duration-200 ease-in' />
+        <Input
+          id='media'
+          accept='image/*, video/*'
+          type='file'
+          className='hidden'
+          multiple
+          onChange={handleMedia}
+        />
+      </label>
     </div>
   );
 };
