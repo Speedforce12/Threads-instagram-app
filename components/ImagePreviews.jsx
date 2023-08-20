@@ -1,11 +1,22 @@
+"use client";
+
 import { Navigation } from "swiper/modules";
 import { SwiperSlide, Swiper } from "swiper/react";
 // import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import Image from "next/image";
+import { X } from "lucide-react";
 
-const ImagePreviews = ({ media }) => {
+const ImagePreviews = ({ media, onChange, setMedias }) => {
+  const removeMedia = (index) => {
+    // Use the functional update approach for setMedias
+    setMedias((prevMediaFiles) => prevMediaFiles.filter((_, i) => i !== index));
+
+    // Update the form's media value using onChange
+    onChange(media.filter((_, i) => i !== index));
+  };
+
   return (
     <div className='mx-auto container mt-3 sm:mt-0'>
       <Swiper
@@ -18,7 +29,7 @@ const ImagePreviews = ({ media }) => {
         navigation>
         {media.map((media, i) => (
           <div
-            key={i}
+            key={`${media.url}-${Date.now()}`}
             className='aspect-square relative h-full w-full shadow-sm overflow-hidden'>
             {media.type.includes("image/") ? (
               <>
@@ -30,6 +41,11 @@ const ImagePreviews = ({ media }) => {
                       fill
                       className='object-contain rounded-md'
                     />
+                    <div
+                      className='absolute top-1 right-2 rounded-full h-8 w-8 flex items-center justify-center hover:bg-gray-700 cursor-pointer bg-gray-800'
+                      onClick={() => removeMedia(i)}>
+                      <X className='text-white h-5 w-5' />
+                    </div>
                   </div>
                 </SwiperSlide>
               </>
@@ -46,6 +62,11 @@ const ImagePreviews = ({ media }) => {
                       <source src={media.url} type={media.type} />
                       Your browser does not support the video tag.
                     </video>
+                    <div
+                      className='absolute top-1 right-2 rounded-full h-8 w-8 flex items-center justify-center hover:bg-gray-700 cursor-pointer bg-gray-800'
+                      onClick={() => removeMedia(i)}>
+                      <X className='text-white h-5 w-5' />
+                    </div>
                   </div>
                 </SwiperSlide>
               </>

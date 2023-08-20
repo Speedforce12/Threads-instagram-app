@@ -58,11 +58,7 @@ const MediaUpload = ({ value, onChange,setMedias }) => {
    setMedias(validMedia);
  };
 
-  const removeMedia = (index) => {
-    setMediaFiles((prevMediaFiles) =>
-      prevMediaFiles.filter((_, i) => i !== index)
-    );
-  };
+ 
 
   useEffect(() => {
     setMounted(true);

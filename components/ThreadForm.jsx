@@ -38,7 +38,7 @@ const threadSchema = z.object({
 const ThreadForm = () => {
   const [input, setInput] = useState("");
   const textbox = useRef(null);
-  const [medias, setMedias] = useState([])
+  const [medias, setMedias] = useState([]);
   const { user } = useUser();
 
   const form = useForm({
@@ -64,6 +64,18 @@ const ThreadForm = () => {
 
     setInput(e.target.value);
     onChange(e.target.value);
+  };
+
+  // Function to remove a phone based on its index
+  const removeMedia = (indexToRemove) => {
+    // Create a copy of the current medias array
+    const updatedMedias = [...medias];
+    // Remove the phone at the specified index
+    updatedMedias.splice(indexToRemove, 1);
+    // Update the medias state with the modified array
+    setMedias(updatedMedias);
+    // Also update the form values, if needed
+    form.setValue("media", updatedMedias);
   };
 
   function onSubmit(data) {
@@ -148,7 +160,7 @@ const ThreadForm = () => {
                   <SelectContent className='bg-black text-white'>
                     <SelectItem
                       value='anyone'
-                      className='cursor-pointer px-3  font-medium focus:bg-neutral-800  focus:text-white'>
+                      className='cursor-pointer px-6  font-medium focus:bg-neutral-800  focus:text-white'>
                       <div className='flex w-40 items-center justify-between'>
                         Anyone
                         <Globe2 className='ml-auto h-5 w-5 text-sky-500' />
@@ -156,7 +168,7 @@ const ThreadForm = () => {
                     </SelectItem>
                     <SelectItem
                       value='followers'
-                      className='cursor-pointer px-3 font-medium focus:bg-neutral-800  focus:text-white'>
+                      className='cursor-pointer px-6 font-medium focus:bg-neutral-800  focus:text-white'>
                       <div className='flex w-40 items-center justify-between '>
                         Profiles you follow
                         <Users2 className='h-5 w-5 text-sky-500' />
@@ -164,7 +176,7 @@ const ThreadForm = () => {
                     </SelectItem>
                     <SelectItem
                       value='mentioned'
-                      className='cursor-pointer px-3 font-medium focus:bg-neutral-800  focus:text-white'>
+                      className='cursor-pointer px-6 font-medium focus:bg-neutral-800  focus:text-white'>
                       <div className='flex w-40 items-center justify-between'>
                         Mentioned Only
                         <AtSign className='h-5 w-5 text-sky-500' />
@@ -178,7 +190,11 @@ const ThreadForm = () => {
           />
         </div>
       </form>
-        <ImagePreviews media={medias} />
+      <ImagePreviews
+        media={medias}
+        onChange={(media) => form.setValue("media", media)}
+        setMedias={setMedias}
+      />
     </Form>
   );
 };
