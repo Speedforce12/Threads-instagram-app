@@ -22,7 +22,7 @@ import { useState } from "react";
 
 const onboardingSchema = z.object({
   username: z.string().min(1).max(50),
-  bio: z.string().min(1).max(350),
+  bio: z.string().min(1).max(230),
   image: z.string(),
 });
 

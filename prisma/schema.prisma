@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id               String    @id @default(auto()) @map("_id") @db.ObjectId
+  username         String
+  image            String
+  isOnboarded      Boolean   @default(false)
+  bio              String
+  hasNotifications Boolean   @default(false)
+  comments         Comment[]
+  followers        String[]  @db.ObjectId  
+  following        String[]  @db.ObjectId 
+  likes            String[]  @db.ObjectId
+  threads          Thread[]
+
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  
+  
+}
+
+model Thread {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  thread       String
+  replyStatus  ReplyStatus @default(anyone)
+  attachments  Media[]
+  creatorId    String      @db.ObjectId
+  likes        String[]    @db.ObjectId
+  comments     Comment[]
+  creator      User        @relation(fields: [creatorId], references:[id],onDelete: Cascade)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  @@index([creatorId])
+}
+
+model Comment {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  creatorId    String   @db.ObjectId
+  creator      User     @relation(fields: [creatorId], references:[id],onDelete: Cascade)
+  content      String
+  threadId     String   @db.ObjectId
+  thread       Thread   @relation(fields: [threadId], references:[id],onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+
+
+  @@index([threadId])
+  @@index([creatorId])
+}
+
+
+model Media {
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  type       String
+  url        String
+  threadId   String     @db.ObjectId
+  thread     Thread     @relation(fields: [threadId], references:[id], onDelete: Cascade)
+ 
+  createdAt  DateTime   @default(now())
+
+
+  @@index([threadId])
+}
+
+enum ReplyStatus {
+  anyone
+  followers
+  mentioned 
+}
