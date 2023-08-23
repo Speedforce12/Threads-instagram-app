@@ -3,10 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import ThreadOptions from "./ThreadOptions";
-import LikeHeart from "../ThreadPostActions/LikeHeart";
-import Share from "../ThreadPostActions/Share";
-import Repost from "../ThreadPostActions/Repost";
-import Comment from "../ThreadPostActions/Comment";
+import LikeHeart from "./ThreadPostActions/LikeHeart";
+import Share from "./ThreadPostActions/Share";
+import Repost from "./ThreadPostActions/Repost";
+import Comment from "./ThreadPostActions/Comment";
+import LikesReplyInfo from "./LikesReplyInfo";
 
 const ThreadPost = () => {
   return (
@@ -23,7 +24,7 @@ const ThreadPost = () => {
           </Link>
           <div className='relative mt-2 w-0.5 grow rounded-full bg-neutral-800' />
         </div>
-        <div className='flex flex-col w-full ml-3'>
+        <Link href={`/thread/${156}`} className='flex flex-col w-full ml-3'>
           <div className='flex w-full justify-between items-center'>
             <p className='text-sm text-white'>Ovonee Delpesche</p>
             <div className='flex items-center justify-between gap-2'>
@@ -49,16 +50,18 @@ const ThreadPost = () => {
               />
             </div>
           </div>
-          <div className='flex items-center text-white gap-3 my-4'>
+          <div className='flex items-center text-white gap-3 mt-4'>
             <LikeHeart />
             <Comment />
             <Repost />
             <Share />
           </div>
-        </div>
+        </Link>
       </div>
 
-      <div className='w-full border p-3'></div>
+      <div className='w-full p-2 flex items-center'>
+        <LikesReplyInfo />
+      </div>
     </article>
   );
 };

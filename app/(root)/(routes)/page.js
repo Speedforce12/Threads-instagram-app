@@ -1,6 +1,5 @@
-import ThreadForm from '@/components/ThreadForm';
-import ThreadPost from '@/components/createThreads/ThreadPost';
-
+import ThreadForm from "@/components/createThreads/ThreadForm";
+import ThreadPost from "@/components/threadCard/ThreadPost";
 
 export default function Home() {
   return (
@@ -9,6 +8,12 @@ export default function Home() {
         <ThreadForm />
       </div>
 
+      <div className='my-5 border-t border-b border-white/30'>
+        <ThreadPost />
+      </div>
+      <div className='my-5 border-t border-b border-white/30'>
+        <ThreadPost />
+      </div>
       <div className='my-5 border-t border-b border-white/30'>
         <ThreadPost />
       </div>

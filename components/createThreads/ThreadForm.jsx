@@ -5,8 +5,8 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
-import { Button } from "./ui/button";
-import { Textarea } from "./ui/textarea";
+import { Button } from "../ui/button";
+import { Textarea } from "../ui/textarea";
 
 import {
   Form,
@@ -17,16 +17,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import MediaUpload from "./mediaUpload";
+import MediaUpload from "../mediaUpload";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
+} from "../ui/select";
 import { AtSign, Globe2, Users2 } from "lucide-react";
-import ImagePreviews from "./ImagePreviews";
+import ImagePreviews from "../ImagePreviews";
 import { useUser } from "@clerk/nextjs";
 
 const threadSchema = z.object({
