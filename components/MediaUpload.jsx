@@ -3,22 +3,20 @@
 import { useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { Paperclip } from "lucide-react";
-import Image from "next/image";
 import { toast } from "sonner";
 
 const MediaUpload = ({ value, onChange,setMedias }) => {
-  const [mediaFiles, setMediaFiles] = useState([]);
   const [mounted, setMounted] = useState(false);
 
   const maxImageSize = 5 * 1024 * 1024;
-  const maxVideoSize = 512 * 1024 * 1024;
+  const maxVideoSize = 100 * 1024 * 1024;
 
  const handleMedia = async (e) => {
    e.preventDefault();
    const { files } = e.target;
 
-   if (files.length > 4) {
-     toast.error("You can only upload 4 files at a time.");
+   if (files.length > 10) {
+     toast.error("You can only upload 10 files at a time.");
      return;
    }
 

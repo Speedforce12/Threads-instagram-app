@@ -1,4 +1,4 @@
-import { ClerkProvider, currentUser } from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import "../globals.css";
 import { Inter } from "next/font/google";
 import NavBar from "@/components/NavBar";
@@ -6,6 +6,7 @@ import Sidebar from "@/components/Sidebar";
 import RightBar from "@/components/RightBar";
 import BottomBar from "@/components/BottomBar";
 import ToastProvider from "@/providers/toastProvider";
+import { fetchUser } from "@/lib/fetchUser";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,9 +16,8 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const user = await currentUser();
-  const userId = user?.id;
-  const userImage = user?.imageUrl;
+
+  const user = await fetchUser()
 
   return (
     <ClerkProvider>
@@ -26,7 +26,7 @@ export default async function RootLayout({ children }) {
           <NavBar />
           <ToastProvider />
           <div className='flex flex-row'>
-            <Sidebar userId={userId} userImage={userImage} />
+            <Sidebar userId={user.id} userImage={user.image} />
             <main className='flex min-h-screen flex-1 flex-col items-center overflow-auto'>
               <section className='w-full max-w-xl'>{children}</section>
             </main>

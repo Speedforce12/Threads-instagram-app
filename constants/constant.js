@@ -1,7 +1,7 @@
-import {Search } from "lucide-react";
-import { GoHome, GoHomeFill } from "react-icons/go"
-import { TbSquareRoundedPlus, TbSquareRoundedPlusFilled } from "react-icons/tb"
-import {FaHeart, FaRegHeart, FaSearch} from  "react-icons/fa"
+import { Search } from "lucide-react";
+import { GoHome, GoHomeFill } from "react-icons/go";
+import { TbSquareRoundedPlus, TbSquareRoundedPlusFilled } from "react-icons/tb";
+import { FaHeart, FaRegHeart, FaSearch } from "react-icons/fa";
 
 export const routes = [
   {
@@ -28,5 +28,17 @@ export const routes = [
     path: "/activity",
     icon: FaRegHeart,
     active: FaHeart,
+  },
+];
+
+export const profileTabs = [
+  {
+    name: "Threads",
+  },
+  {
+    name: "Replies",
+  },
+  {
+    name: "Reposts",
   },
 ];

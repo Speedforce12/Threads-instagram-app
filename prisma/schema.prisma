@@ -17,6 +17,7 @@ model User {
   image            String
   isOnboarded      Boolean   @default(false)
   bio              String
+  userId           String    @unique
   hasNotifications Boolean   @default(false)
   comments         Comment[]
   followers        String[]  @db.ObjectId  

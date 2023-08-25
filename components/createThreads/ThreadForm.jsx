@@ -28,6 +28,8 @@ import {
 import { AtSign, Globe2, Users2 } from "lucide-react";
 import ImagePreviews from "../ImagePreviews";
 import { useUser } from "@clerk/nextjs";
+import createThreads from "@/actions/createThreads";
+import { useRouter } from "next/navigation";
 
 const threadSchema = z.object({
   thread: z.string().min(1).max(350),
@@ -35,11 +37,11 @@ const threadSchema = z.object({
   replyStatus: z.string(),
 });
 
-const ThreadForm = () => {
+const ThreadForm = ({user}) => {
   const [input, setInput] = useState("");
   const textbox = useRef(null);
   const [medias, setMedias] = useState([]);
-  const { user } = useUser();
+  const router = useRouter()
 
   const form = useForm({
     resolver: zodResolver(threadSchema),
@@ -66,20 +68,11 @@ const ThreadForm = () => {
     onChange(e.target.value);
   };
 
-  // Function to remove a phone based on its index
-  const removeMedia = (indexToRemove) => {
-    // Create a copy of the current medias array
-    const updatedMedias = [...medias];
-    // Remove the phone at the specified index
-    updatedMedias.splice(indexToRemove, 1);
-    // Update the medias state with the modified array
-    setMedias(updatedMedias);
-    // Also update the form values, if needed
-    form.setValue("media", updatedMedias);
-  };
-
-  function onSubmit(data) {
+  async function onSubmit(data) {
     console.log(data);
+    await createThreads(data);
+       router.push("/");
+       router.refresh();
   }
 
   return (
@@ -97,27 +90,27 @@ const ThreadForm = () => {
                       <div className='h-10 w-10 relative'>
                         <Image
                           alt='ovone'
-                          src={user?.imageUrl || "/avatar.png"}
+                          src={user?.image || "/avatar.png"}
                           fill
                           className=''
                         />
                       </div>
                       <p className='text-white text-sm font-medium'>
-                        Ovonee Delpesche
+                       {user.username}
                       </p>
                     </div>
                     <Button
                       type='submit'
+                      size="sm"
                       disabled={isDisabled || field.value === ""}
-                      size='sm'
-                      className='rounded-full bg-sky-600 font-bold text-white hover:bg-sky-800'>
+                      className='rounded-lg bg-black border border-neutral-500 py-2 font-bold text-white'>
                       Post
                     </Button>
                   </div>
                   <Textarea
                     ref={textbox}
                     rows={1}
-                    className='min-h-[40px] resize-none border-none bg-transparent p-2 text-lg font-medium text-white   focus-visible:ring-0 focus-visible:ring-offset-0'
+                    className='min-h-[40px] resize-none border-none bg-transparent p-2 text-base font-medium text-white   focus-visible:ring-0 focus-visible:ring-offset-0'
                     placeholder='Start a thread...'
                     value={field.value}
                     onChange={(e) => handleInputChange(e, field.onChange)}
