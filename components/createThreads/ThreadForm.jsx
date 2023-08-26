@@ -17,7 +17,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import MediaUpload from "../mediaUpload";
 import {
   Select,
   SelectContent,
@@ -27,10 +26,10 @@ import {
 } from "../ui/select";
 import { AtSign, Globe2, Users2 } from "lucide-react";
 import ImagePreviews from "../ImagePreviews";
-import { useUser } from "@clerk/nextjs";
 import createThreads from "@/actions/createThreads";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import MediaUpload from "../MediaUpload";
 
 const threadSchema = z.object({
   thread: z.string().min(1).max(350),
