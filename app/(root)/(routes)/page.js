@@ -27,18 +27,19 @@ export default async function Home() {
     
   });
 
-  console.log(threads);
 
   return (
-    <div className='flex flex-col flex-1 mt-14 w-full px-4'>
+    <div className='flex flex-col flex-1 md:mt-14 mt-10 w-full mx-auto px-7'>
       <div className='p-3'>
         <ThreadForm user={user} />
       </div>
-      {threads.map((thread) => (
-        <div className='my-5 border-t border-b border-white/30' key={thread.id}>
-          <ThreadPost thread={thread} />
-        </div>
-      ))}
+      <div className="mb-10">
+        {threads.map((thread) => (
+          <div className='border-t border-white/30' key={thread.id}>
+            <ThreadPost thread={thread} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

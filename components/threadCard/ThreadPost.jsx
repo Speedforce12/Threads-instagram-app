@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import moment from "moment/moment";
 import Image from "next/image";
@@ -10,10 +10,11 @@ import Share from "./ThreadPostActions/Share";
 import Repost from "./ThreadPostActions/Repost";
 import Comment from "./ThreadPostActions/Comment";
 import LikesReplyInfo from "./LikesReplyInfo";
+import MediaViewer from "./MediaViewer";
 
-const ThreadPost = ({thread}) => {
+const ThreadPost = ({ thread }) => {
   return (
-    <article className='flex w-full p-3  flex-col'>
+    <article className='flex w-full px-3  flex-col'>
       <div className='flex'>
         <div className='flex items-center flex-col'>
           <Link
@@ -28,28 +29,27 @@ const ThreadPost = ({thread}) => {
           </Link>
           <div className='relative mt-2 w-0.5 grow rounded-full bg-neutral-800' />
         </div>
-        <Link href={`/thread/${thread.id}`} className='flex flex-col w-full ml-3'>
+        <Link
+          href={`/thread/${thread.id}`}
+          className='flex flex-col w-full pr-3'>
           <div className='flex w-full justify-between items-center'>
             <p className='text-sm text-white'>{thread.creator.username}</p>
-            <div className='flex items-center justify-between gap-2'>
-              <span className='text-sm text-neutral-400 font-medium'>
+            <div className='flex items-center justify-between gap-2 '>
+              <span className='text-sm text-neutral-400 font-medium '>
                 {moment(thread.createdAt).fromNow(true)}
               </span>
               <ThreadOptions />
             </div>
           </div>
           <div className='flex flex-col mt-2'>
-            <p className='text-white whitespace-pre-line text-sm'>
+            <p className='text-white whitespace-pre-wrap text-sm'>
               {thread.thread}
             </p>
-            <div className='aspect-square relative mt-2.5'>
-              <Image
-                src='/avatar.png'
-                alt=''
-                fill
-                className='rounded-lg object-cover border border-neutral-600 w-full mt-3'
-              />
-            </div>
+            {thread.attachments.length > 0 && (
+              <div className='my-3 w-[90%]'>
+                <MediaViewer media={thread.attachments} />
+              </div>
+            )}
           </div>
           <div className='flex items-center text-white gap-3 mt-4'>
             <LikeHeart />
