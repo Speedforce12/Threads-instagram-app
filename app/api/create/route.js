@@ -13,6 +13,7 @@ export const POST = async (request) => {
   try {
     const user = await currentUser();
 
+
     if (!user) {
       return NextResponse.json("Unauthorized", { status: 401 });
     }
@@ -26,8 +27,8 @@ export const POST = async (request) => {
     // Loop through the files and upload them to Cloudinary
     const attachments = await Promise.all(
       media.map(async (file) => {
-        const result = await cloudinary.uploader.upload(file, {
-          resource_type: "auto",
+        const result = await cloudinary.uploader.upload(file.url, {
+          resource_type: "auto", folder:"threads_attachment",
         });
         return result;
       })
@@ -37,7 +38,7 @@ export const POST = async (request) => {
 
     const creator = await prisma.user.findUnique({
       where: {
-        id: user.id,
+        userId: user.id,
       },
     });
 
@@ -46,6 +47,12 @@ export const POST = async (request) => {
         thread,
         replyStatus,
         creatorId: creator.id,
+        attachments: {
+          create: attachments.map((file) => ({
+            url: file.secure_url,
+            type: file.resource_type
+          }))
+        }
       },
     });
 

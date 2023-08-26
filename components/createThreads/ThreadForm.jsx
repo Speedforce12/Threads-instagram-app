@@ -30,6 +30,7 @@ import ImagePreviews from "../ImagePreviews";
 import { useUser } from "@clerk/nextjs";
 import createThreads from "@/actions/createThreads";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const threadSchema = z.object({
   thread: z.string().min(1).max(350),
@@ -37,11 +38,11 @@ const threadSchema = z.object({
   replyStatus: z.string(),
 });
 
-const ThreadForm = ({user}) => {
+const ThreadForm = ({ user }) => {
   const [input, setInput] = useState("");
   const textbox = useRef(null);
   const [medias, setMedias] = useState([]);
-  const router = useRouter()
+  const router = useRouter();
 
   const form = useForm({
     resolver: zodResolver(threadSchema),
@@ -71,8 +72,11 @@ const ThreadForm = ({user}) => {
   async function onSubmit(data) {
     console.log(data);
     await createThreads(data);
-       router.push("/");
-       router.refresh();
+    form.reset();
+    setMedias([]);
+    router.push("/");
+    router.refresh();
+    toast.success("your post was added");
   }
 
   return (
@@ -96,12 +100,12 @@ const ThreadForm = ({user}) => {
                         />
                       </div>
                       <p className='text-white text-sm font-medium'>
-                       {user.username}
+                        {user.username}
                       </p>
                     </div>
                     <Button
                       type='submit'
-                      size="sm"
+                      size='sm'
                       disabled={isDisabled || field.value === ""}
                       className='rounded-lg bg-black border border-neutral-500 py-2 font-bold text-white'>
                       Post

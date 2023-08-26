@@ -11,37 +11,36 @@ import Repost from "./ThreadPostActions/Repost";
 import Comment from "./ThreadPostActions/Comment";
 import LikesReplyInfo from "./LikesReplyInfo";
 
-const ThreadPost = () => {
+const ThreadPost = ({thread}) => {
   return (
     <article className='flex w-full p-3  flex-col'>
       <div className='flex'>
         <div className='flex items-center flex-col'>
-          <Link href={`/profile/${156}`} className='relative h-10 w-10'>
+          <Link
+            href={`/profile/${thread.creatorId}`}
+            className='relative h-10 w-10'>
             <Image
               alt=''
-              src='/avatar.png'
+              src={thread.creator.image}
               fill
               className='object-cover rounded-full'
             />
           </Link>
           <div className='relative mt-2 w-0.5 grow rounded-full bg-neutral-800' />
         </div>
-        <Link href={`/thread/${156}`} className='flex flex-col w-full ml-3'>
+        <Link href={`/thread/${thread.id}`} className='flex flex-col w-full ml-3'>
           <div className='flex w-full justify-between items-center'>
-            <p className='text-sm text-white'>Ovonee Delpesche</p>
+            <p className='text-sm text-white'>{thread.creator.username}</p>
             <div className='flex items-center justify-between gap-2'>
               <span className='text-sm text-neutral-400 font-medium'>
-                {moment([2023, 7, 21]).fromNow(true)}
+                {moment(thread.createdAt).fromNow(true)}
               </span>
               <ThreadOptions />
             </div>
           </div>
           <div className='flex flex-col mt-2'>
             <p className='text-white whitespace-pre-line text-sm'>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eos
-              error cum ratione consequuntur. Animi quos porro praesentium!
-              Molestias, nesciunt. Dolor tempora voluptates doloremque minima
-              laudantium debitis atque repudiandae, nihil deleniti?
+              {thread.thread}
             </p>
             <div className='aspect-square relative mt-2.5'>
               <Image
