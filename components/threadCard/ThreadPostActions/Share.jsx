@@ -16,11 +16,9 @@ const Share = ({ threadId }) => {
   const origin = useOrigin();
   const shareLink = `${origin}/thread/${threadId}`;
 
-  console.log(shareLink);
-
   const handleShare = () => {
     navigator.clipboard.writeText(shareLink);
-    toast.success("Copied")
+    toast.success("Copied");
   };
   return (
     <DropdownMenu>

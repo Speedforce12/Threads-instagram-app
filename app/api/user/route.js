@@ -48,15 +48,15 @@ export const POST = async (request) => {
 
 export const GET = async (request) => {
   try {
-    const user = await fetchUser();
+    const { userId } = auth();
 
-    if (!user) {
+    if (!userId) {
       return NextResponse.json("Unauthorized", { status: 401 });
     }
 
     const currUser = await prisma.user.findUnique({
       where: {
-        userId: user.id,
+        userId,
       },
     });
 
@@ -66,6 +66,7 @@ export const GET = async (request) => {
 
     return NextResponse.json(currUser, { status: 200 });
   } catch (error) {
-    return NextResponse("Internal Server Error", { status: 500 });
+    console.log("Fetch User", error);
+    return new NextResponse("Internal Server Error", { status: 500 });
   }
 };
