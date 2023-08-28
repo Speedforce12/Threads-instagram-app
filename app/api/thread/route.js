@@ -1,3 +1,4 @@
+import prisma from "@/lib/prismadb";
 import { currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
