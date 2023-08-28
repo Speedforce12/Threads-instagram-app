@@ -14,6 +14,16 @@ export default async function Home() {
   const threads = await prisma.thread.findMany({
     include: {
       attachments: true,
+      comments: {
+        select: {
+          creator: {
+            select: {
+              image: true,
+              id: true,
+            },
+          },
+        },
+      },
       creator: {
         select: {
           username: true,
@@ -22,18 +32,16 @@ export default async function Home() {
       },
     },
     orderBy: {
-      createdAt: "desc"
+      createdAt: "desc",
     },
-    
   });
-
 
   return (
     <div className='flex flex-col flex-1 md:mt-14 mt-10 w-full mx-auto px-7'>
-      <div className='p-3'>
+      <div className='p-3 mb-5'>
         <ThreadForm user={user} />
       </div>
-      <div className="mb-10">
+      <div className='mb-10'>
         {threads.map((thread) => (
           <div className='border-t border-white/30' key={thread.id}>
             <ThreadPost thread={thread} />

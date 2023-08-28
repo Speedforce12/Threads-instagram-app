@@ -5,7 +5,7 @@ const createThreads = async (data) => {
   try {
     if (!data) return;
 
-    const thread = await axios.post("/api/create", data);
+    const thread = await axios.post("/api/thread", data);
     if (thread.status === 200) {
       return thread;
     }

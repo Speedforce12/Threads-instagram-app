@@ -52,6 +52,7 @@ model Comment {
   creator      User     @relation(fields: [creatorId], references:[id],onDelete: Cascade)
   content      String
   threadId     String   @db.ObjectId
+  replyStatus  ReplyStatus @default(anyone)
   thread       Thread   @relation(fields: [threadId], references:[id],onDelete: Cascade)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt

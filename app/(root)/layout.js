@@ -7,6 +7,7 @@ import RightBar from "@/components/RightBar";
 import BottomBar from "@/components/BottomBar";
 import ToastProvider from "@/providers/toastProvider";
 import { fetchUser } from "@/lib/fetchUser";
+import ModalProvider from "@/providers/modalProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,14 +17,14 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-
-  const user = await fetchUser()
+  const user = await fetchUser();
 
   return (
     <ClerkProvider>
       <html lang='en'>
         <body className={inter.className}>
           <NavBar />
+          <ModalProvider />
           <ToastProvider />
           <div className='flex flex-row'>
             <Sidebar userId={user.id} userImage={user.image} />
