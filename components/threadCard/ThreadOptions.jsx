@@ -12,12 +12,11 @@ const ThreadOptions = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <MoreHorizontal className="text-neutral-600"/>
+        <MoreHorizontal className="text-neutral-600 bg-black"/>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Delete</DropdownMenuItem>
-        <DropdownMenuItem>Billing</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
