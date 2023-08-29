@@ -52,7 +52,7 @@ const ThreadPost = async ({ thread }) => {
             </div>
           </Link>
           <div className='flex items-center text-white gap-3 mt-4'>
-            <LikeHeart threadId={thread.id} />
+            <LikeHeart threadId={thread.id} currentUser={currentUser} />
             <Comment thread={thread} currentUser={currentUser} />
             <Repost />
             <Share threadId={thread.id} />

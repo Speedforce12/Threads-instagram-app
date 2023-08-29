@@ -1,28 +1,38 @@
 import { redirectToSignIn } from "@clerk/nextjs";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useMemo } from "react";
+import { toast } from "sonner";
 
-export const useThreadLike = async (threadId) => {
+export const useThreadLike = (threadId, currentUser) => {
+  const router = useRouter();
+
   if (!threadId) {
     throw new Error("Thread ID is required");
   }
 
-  const { data: user } = await axios.get("/api/user");
-  console.log(user);
+  const isLiked = useMemo(() => {
+    const likedThreads = currentUser.likes || [];
+    return likedThreads.includes(threadId);
+  }, [threadId, currentUser.likes]);
 
-  if (!user) {
-    return redirectToSignIn();
-  }
+  const toggleThreadLike = async () => {
+    if (!currentUser) {
+      return redirectToSignIn();
+    }
 
-  const likedThreads = user.likes;
-  const isLiked = likedThreads.includes(threadId);
+    try {
+      let request;
+      if (isLiked) {
+        request = () => axios.delete(`/api/thread/${threadId}/like`);
+      } else {
+        request = () => axios.post(`/api/thread/${threadId}/like`);
+      }
 
-  console.log(isLiked);
-
-  const toggleThreadLike = () => {
-    if (isLiked) {
-      axios.patch(`/api/thread/${threadId}/like`);
-    } else {
-      axios.delete(`/api/thread/${threadId}/like`);
+      await request();
+      router.refresh();
+    } catch (error) {
+      toast.error("something went wrong");
     }
   };
 

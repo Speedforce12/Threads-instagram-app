@@ -8,9 +8,9 @@ const LikesReplyInfo = ({ comments, threadId, likes }) => {
   return (
     <>
       <div className='flex -space-x-3'>
-        {comments.map((comment) => (
+        {comments.map((comment, i) => (
           <Image
-            key={comment.creator.id}
+            key={i}
             alt='avatar'
             src={comment.creator.image}
             width={25}
