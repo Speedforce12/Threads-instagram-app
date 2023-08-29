@@ -1,7 +1,6 @@
 import { fetchUser } from "@/lib/fetchUser";
 import prisma from "@/lib/prismadb";
 import { NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
 
 export const POST = async (request, { params }) => {
   try {
@@ -23,10 +22,16 @@ export const POST = async (request, { params }) => {
       },
     });
 
-    if (updatedUser) {
-      revalidatePath("/");
-      return NextResponse.json({ revalidated: true, now: Date.now() });
-    }
+    await prisma.thread.update({
+      where: {
+        id: threadId,
+      },
+      data: {
+        likes: {
+          push: updatedUser.id,
+        },
+      },
+    });
 
     return NextResponse.json(updatedUser, { status: 200 });
   } catch (error) {
@@ -56,10 +61,23 @@ export const DELETE = async (request, { params }) => {
       },
     });
 
-    if (updatedUser) {
-      revalidatePath("/");
-      return NextResponse.json({ revalidated: true, now: Date.now() });
-    }
+    const currThread = await prisma.thread.findUnique({
+      where: {
+        id: threadId,
+      },
+    });
+
+    let threadLikes = [...(currThread.likes || [])];
+    threadLikes = threadLikes.filter((c) => c !== updatedUser.id);
+
+    await prisma.thread.update({
+      where: {
+        id: threadId,
+      },
+      data: {
+        likes: threadLikes,
+      },
+    });
 
     return NextResponse.json(updatedUser, { status: 200 });
   } catch (error) {
