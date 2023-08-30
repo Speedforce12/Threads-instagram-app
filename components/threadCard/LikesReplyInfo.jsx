@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -29,7 +27,7 @@ const LikesReplyInfo = ({ comments, threadId, likes }) => {
             : `${comments.length} reply`}
         </Link>
         <div className='rounded-full bg-neutral-600 h-1.5 w-1.5' />
-        <p className='text-neutral-400 text-sm font-medium'>{likes.length} likes</p>
+        <p className='text-neutral-400 text-sm font-medium'>{likes} likes</p>
       </div>
     </>
   );

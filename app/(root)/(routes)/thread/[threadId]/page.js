@@ -6,7 +6,7 @@ import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { BsBack } from "react-icons/bs";
+
 
 const ThreadPage = async ({ params }) => {
   const { threadId } = params;

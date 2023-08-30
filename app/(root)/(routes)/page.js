@@ -1,40 +1,25 @@
 import ThreadForm from "@/components/createThreads/ThreadForm";
 import ThreadPost from "@/components/threadCard/ThreadPost";
+import getAllThreads from "@/lib/fetchAllThreads";
 import { fetchUser } from "@/lib/fetchUser";
-import prisma from "@/lib/prismadb";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
   const user = await fetchUser();
 
   if (!user?.isOnboarded) {
-    redirect("onboarding");
+    redirect("/onboarding");
   }
 
-  const threads = await prisma.thread.findMany({
-    include: {
-      attachments: true,
-      comments: {
-        select: {
-          creator: {
-            select: {
-              image: true,
-              id: true,
-            },
-          },
-        },
-      },
-      creator: {
-        select: {
-          username: true,
-          image: true,
-        },
-      },
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+  const data = await getAllThreads();
+
+  const threads = data.map((thread) => ({
+    ...thread,
+    user_liked_thread: !!thread.likes?.find((t) => t?.userId === user.id),
+    likeCount: thread?.likes?.length || 0,
+  })) || [];
+
+  console.log(threads)
 
   return (
     <div className='flex flex-col flex-1 md:mt-14 mt-10 w-full mx-auto px-7'>
@@ -42,11 +27,7 @@ export default async function Home() {
         <ThreadForm user={user} />
       </div>
       <div className='mb-10'>
-        {threads.map((thread) => (
-          <div className='border-t border-white/30' key={thread.id}>
-            <ThreadPost thread={thread} />
-          </div>
-        ))}
+        <ThreadPost threads={threads} user={ user} />
       </div>
     </div>
   );

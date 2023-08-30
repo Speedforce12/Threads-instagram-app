@@ -22,7 +22,7 @@ model User {
   comments         Comment[]
   followers        String[]  @db.ObjectId  
   following        String[]  @db.ObjectId 
-  likes            String[]  @db.ObjectId
+  likes            Like[]  
   threads          Thread[]
 
   createdAt        DateTime  @default(now())
@@ -37,7 +37,7 @@ model Thread {
   replyStatus  ReplyStatus @default(anyone)
   attachments  Media[]
   creatorId    String      @db.ObjectId
-  likes        String[]    @db.ObjectId
+  likes      Like[]  
   comments     Comment[]
   creator      User        @relation(fields: [creatorId], references:[id],onDelete: Cascade)
   createdAt    DateTime    @default(now())
@@ -75,6 +75,19 @@ model Media {
 
 
   @@index([threadId])
+}
+
+
+model Like {
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String     @db.ObjectId
+  user       User       @relation(fields: [userId], references:[id], onDelete: Cascade)
+  threadId   String     @db.ObjectId
+  thread     Thread     @relation(fields: [threadId], references:[id], onDelete: Cascade)
+
+  createdAt  DateTime   @default(now())
+
+
 }
 
 enum ReplyStatus {
