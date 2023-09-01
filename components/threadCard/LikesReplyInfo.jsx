@@ -6,7 +6,7 @@ const LikesReplyInfo = ({ comments, threadId, likes }) => {
   return (
     <>
       <div className='flex -space-x-3'>
-        {comments.map((comment, i) => (
+        {comments.slice(0, 3).map((comment, i) => (
           <Image
             key={i}
             alt='avatar'

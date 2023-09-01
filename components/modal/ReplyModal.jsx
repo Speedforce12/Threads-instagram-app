@@ -46,7 +46,7 @@ const ReplyModal = () => {
     },
   });
 
-  const { thread, currentUser } = data;
+  const { thread, user } = data;
   const isModalOpen = isOpen && type === "reply";
   const isSubmitting = form.formState.isSubmitting;
 
@@ -102,8 +102,8 @@ const ReplyModal = () => {
               <div className='w-full  mt-3 flex items-center space-x-3'>
                 <div className='flex w-full'>
                   <Image
-                    alt={currentUser?.username}
-                    src={currentUser?.image}
+                    alt={user?.username}
+                    src={user?.image}
                     width={80}
                     height={80}
                     className='h-12 w-12 border border-gray-300 object-cover rounded-full'

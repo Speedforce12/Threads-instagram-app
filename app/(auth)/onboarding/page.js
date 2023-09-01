@@ -12,7 +12,7 @@ const OnboardingPage = async () => {
     },
   });
 
-  if (logInUser.isOnboarded) {
+  if (logInUser?.isOnboarded) {
     redirect("/");
   }
 

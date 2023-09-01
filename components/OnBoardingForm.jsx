@@ -37,13 +37,13 @@ const OnBoardingForm = () => {
   const form = useForm({
     resolver: zodResolver(onboardingSchema),
     defaultValues: {
-      username: user?.username || "",
+      username: "",
       bio: "",
       image: "",
     },
   });
 
-  const isDisabled = form.formState.isSubmitting;
+  const isLoading = form.formState.isSubmitting;
 
   const handleImage = (e, onChange) => {
     const file = e.target.files[0];
@@ -59,7 +59,17 @@ const OnBoardingForm = () => {
   };
 
   async function onSubmit(data) {
-    await onBoardedUser(data);
+    let newData = data;
+
+    // sets the user image to the default image if the user did not provide  a new one.
+    if (!data.image) {
+      newData = {
+        ...data,
+        image: user?.imageUrl,
+      };
+    }
+
+    await onBoardedUser(newData);
     toast.success("Profile updated successfully");
     router.refresh();
     router.push("/");
@@ -69,12 +79,14 @@ const OnBoardingForm = () => {
       <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4 w-full'>
         <div className='flex items-center justify-between gap-x-2'>
           <div className='relative h-28 w-28 rounded-full'>
-            <Image
-              src={preview || user?.imageUrl}
-              alt={user?.fullName || "profile pic"}
-              fill
-              className='object-contain'
-            />
+            {user?.imageUrl && (
+              <Image
+                src={preview || user?.imageUrl}
+                alt={user?.fullName || "profile pic"}
+                fill
+                className='object-contain rounded-full'
+              />
+            )}
 
             <div className='absolute  top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/60 w-10 rounded-full flex items-center justify-center  h-10'>
               <Camera
@@ -147,8 +159,8 @@ const OnBoardingForm = () => {
         <div className='flex justify-end'>
           <Button
             className='bg-white text-black hover:bg-gray-200'
-            disabled={isDisabled}>
-            Save Changes
+            disabled={isLoading}>
+            {isLoading ? "Saving..." : "Save Changes"}
           </Button>
         </div>
       </form>

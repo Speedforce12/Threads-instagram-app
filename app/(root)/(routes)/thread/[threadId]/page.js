@@ -1,27 +1,22 @@
+import BackArrow from "@/components/BackArrow";
 import MediaViewer from "@/components/threadCard/MediaViewer";
 import ThreadOptions from "@/components/threadCard/ThreadOptions";
 import { fetchThread } from "@/lib/fetchThread";
-import { MoveLeft } from "lucide-react";
+import { fetchUser } from "@/lib/fetchUser";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-
 const ThreadPage = async ({ params }) => {
   const { threadId } = params;
   const thread = await fetchThread(threadId);
+  const user = await fetchUser();
 
   console.log(thread);
   return (
     <div className='flex flex-col px-3 sm:px-0'>
-      <div className='flex items-center justify-start space-x-5'>
-        <div className='h-11 w-11 hover:bg-neutral-800/70 hover:cursor-pointer flex items-center justify-center rounded-full'>
-          <MoveLeft className='text-white' />
-        </div>
-
-        <h2 className='text-white font-semibold text-lg'>Thread</h2>
-      </div>
+      <BackArrow />
 
       <div className='my-2 flex justify-start flex-col'>
         <div className='flex w-full items-center justify-between'>
@@ -45,7 +40,7 @@ const ThreadPage = async ({ params }) => {
             <span className='text-sm text-neutral-400 font-medium '>
               {moment(thread.createdAt).fromNow(true)}
             </span>
-            <ThreadOptions />
+            <ThreadOptions user={user} thread={thread} />
           </div>
         </div>
 

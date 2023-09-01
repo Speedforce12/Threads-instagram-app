@@ -89,13 +89,13 @@ const ThreadForm = ({ user }) => {
               <FormControl>
                 <div className='flex flex-col space-y-3 border-b border-gray-100/50'>
                   <div className='flex w-full items-center justify-between'>
-                    <div className='flex items-center'>
+                    <div className='flex items-center space-x-2'>
                       <div className='h-10 w-10 relative'>
                         <Image
                           alt='ovone'
                           src={user?.image || "/avatar.png"}
                           fill
-                          className=''
+                          className='rounded-full'
                         />
                       </div>
                       <p className='text-white text-sm font-medium'>

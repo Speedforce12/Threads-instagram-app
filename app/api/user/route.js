@@ -2,7 +2,6 @@ import { RedirectToSignIn, auth, currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
 import prisma from "@/lib/prismadb";
-import { fetchUser } from "@/lib/fetchUser";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -39,9 +38,9 @@ export const POST = async (request) => {
       },
     });
 
-    return NextResponse.json(onBoardedUser);
+    return NextResponse.json(onBoardedUser, { status: 200 });
   } catch (error) {
-    console.error("Create User", error);
+    console.log("Create User", error);
     return NextResponse.json("Internal Sever Error", { status: 500 });
   }
 };
@@ -54,17 +53,13 @@ export const GET = async (request) => {
       return NextResponse.json("Unauthorized", { status: 401 });
     }
 
-    const currUser = await prisma.user.findUnique({
-      where: {
-        userId,
-      },
-    });
+    const users = await prisma.user.findMany();
 
-    if (!currUser) {
-      return NextResponse.json("User not found", { status: 404 });
+    if (!users) {
+      return NextResponse.json("Users not found", { status: 404 });
     }
 
-    return NextResponse.json(currUser, { status: 200 });
+    return NextResponse.json(users, { status: 200 });
   } catch (error) {
     console.log("Fetch User", error);
     return new NextResponse("Internal Server Error", { status: 500 });

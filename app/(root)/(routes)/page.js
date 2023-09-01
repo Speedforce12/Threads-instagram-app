@@ -16,10 +16,8 @@ export default async function Home() {
   const threads = data.map((thread) => ({
     ...thread,
     user_liked_thread: !!thread.likes?.find((t) => t?.userId === user.id),
-    likeCount: thread?.likes?.length || 0,
-  })) || [];
-
-  console.log(threads)
+    likeCount: thread?.likes?.length,
+  }));
 
   return (
     <div className='flex flex-col flex-1 md:mt-14 mt-10 w-full mx-auto px-7'>

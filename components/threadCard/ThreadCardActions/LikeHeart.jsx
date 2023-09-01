@@ -23,7 +23,7 @@ const LikeHeart = ({ thread, user, addOptimisticThread }) => {
     } else {
       addOptimisticThread({
         ...thread,
-        likeCount: thread.likes + 1,
+        likeCount: thread.likeCount + 1,
         user_liked_thread: !thread.user_liked_thread,
       });
       await likeUnlikeThreads(thread.id, "like");

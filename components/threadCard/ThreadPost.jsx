@@ -7,20 +7,23 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import ThreadOptions from "./ThreadOptions";
-import LikeHeart from "./ThreadPostActions/LikeHeart";
-import Share from "./ThreadPostActions/Share";
-import Repost from "./ThreadPostActions/Repost";
-import Comment from "./ThreadPostActions/Comment";
+import LikeHeart from "./ThreadCardActions/LikeHeart";
+import Share from "./ThreadCardActions/Share";
+import Repost from "./ThreadCardActions/Repost";
+import Comment from "./ThreadCardActions/Comment";
 import LikesReplyInfo from "./LikesReplyInfo";
 import MediaViewer from "./MediaViewer";
 
 const ThreadPost = ({ threads, user }) => {
+  // handle optimistic liking and unliking threads
   const [optimisticThreads, addOptimisticThread] = useOptimistic(
     threads,
 
     (currentOptimisticThreads, newThread) => {
       const newOptimisticThreads = [...currentOptimisticThreads];
-      const index = newOptimisticThreads.findIndex((t) => t.id === newThread.id);
+      const index = newOptimisticThreads.findIndex(
+        (t) => t.id === newThread.id
+      );
 
       newOptimisticThreads[index] = newThread;
       return newOptimisticThreads;
@@ -28,8 +31,8 @@ const ThreadPost = ({ threads, user }) => {
   );
 
   return optimisticThreads.map((thread) => (
-    <article className='border-t border-white/30' key={thread.id}>
-      <div className='flex w-full px-3  flex-col'>
+    <article className='border-t border-white/20' key={thread.id}>
+      <div className='flex w-full px-3  flex-col py-3'>
         <div className='flex'>
           <div className='flex items-center flex-col'>
             <Link
@@ -52,7 +55,7 @@ const ThreadPost = ({ threads, user }) => {
                   <span className='text-sm text-neutral-400 font-medium '>
                     {moment(thread.createdAt).fromNow(true)}
                   </span>
-                  <ThreadOptions />
+                  <ThreadOptions user={user} thread={thread} />
                 </div>
               </div>
               <div className='flex flex-col mt-2'>
@@ -66,7 +69,7 @@ const ThreadPost = ({ threads, user }) => {
                 )}
               </div>
             </Link>
-            <div className='flex items-center text-white gap-3 mt-4'>
+            <section className='flex items-center text-white gap-3 mt-4'>
               <LikeHeart
                 thread={thread}
                 user={user}
@@ -75,7 +78,7 @@ const ThreadPost = ({ threads, user }) => {
               <Comment thread={thread} user={user} />
               <Repost />
               <Share threadId={thread.id} />
-            </div>
+            </section>
           </div>
         </div>
 

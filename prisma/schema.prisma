@@ -20,8 +20,8 @@ model User {
   userId           String    @unique
   hasNotifications Boolean   @default(false)
   comments         Comment[]
-  followers        String[]  @db.ObjectId  
-  following        String[]  @db.ObjectId 
+  followers        Followers[] 
+  following        Following[]   
   likes            Like[]  
   threads          Thread[]
 
@@ -37,7 +37,7 @@ model Thread {
   replyStatus  ReplyStatus @default(anyone)
   attachments  Media[]
   creatorId    String      @db.ObjectId
-  likes      Like[]  
+  likes        Like[]  
   comments     Comment[]
   creator      User        @relation(fields: [creatorId], references:[id],onDelete: Cascade)
   createdAt    DateTime    @default(now())
@@ -87,6 +87,24 @@ model Like {
 
   createdAt  DateTime   @default(now())
 
+
+}
+
+
+model Followers {
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String     @db.ObjectId
+  user       User       @relation(fields: [userId], references:[id], onDelete: Cascade)
+  createdAt  DateTime   @default(now())
+
+}
+
+
+model Following {
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String     @db.ObjectId
+  user       User       @relation(fields: [userId], references:[id], onDelete: Cascade)
+  createdAt  DateTime   @default(now())
 
 }
 
