@@ -1,12 +1,12 @@
 "use client";
 
 import { useDebouncedCallback } from "use-debounce";
-import { Search } from "lucide-react";
+import { Search, XCircle } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import SearchResultCard from "./SearchResultCard";
 
-const SearchInput = ({ users }) => {
+const SearchInput = ({ users, currentUser }) => {
   const [query, setQuery] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
 
@@ -29,6 +29,10 @@ const SearchInput = ({ users }) => {
     debounced(newQuery);
   };
 
+  const handleCancel = () => {
+    setQuery("");
+    setFilteredUsers(users);
+  };
   return (
     <div className='items-center  space-y-4 w-full'>
       <div className='border rounded-2xl border-neutral-700 flex items-center p-2'>
@@ -41,11 +45,18 @@ const SearchInput = ({ users }) => {
           onChange={handleSearch}
           placeholder='Search'
         />
+        {query && (
+          <XCircle
+            size={20}
+            className='text-gray-500 cursor-pointer'
+            onClick={handleCancel}
+          />
+        )}
       </div>
 
       <div className='py-3 space-y-4'>
         {filteredUsers.map((user) => (
-          <SearchResultCard key={user.id} user={user} />
+          <SearchResultCard key={user.id} user={user} currentUser={currentUser} />
         ))}
       </div>
     </div>

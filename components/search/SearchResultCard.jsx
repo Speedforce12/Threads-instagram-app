@@ -1,9 +1,46 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { handleFollowingUser } from "@/lib/followUnfollowUser";
+import { toast } from "sonner";
+import { Loader } from "lucide-react";
 
-const SearchResultCard = ({ user }) => {
+const SearchResultCard = ({ user, currentUser }) => {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const handleFollowUnfollow = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      if (user.user_isFollowing) {
+        // Remove the currentUser.id from user.followers
+        const index = user.followers.indexOf(currentUser.id);
+        if (index !== -1) {
+          user.followers.splice(index, 1);
+        }
+        await handleFollowingUser(user.id, "unfollow");
+      } else {
+        user.followers.push(currentUser.id);
+        await handleFollowingUser(user.id, "follow");
+      }
+    } catch (error) {
+      toast.error("Failed to complete request");
+    } finally {
+      setLoading(false);
+      router.refresh();
+    }
+  };
+
+  
+  console.log(user);
+
+
   return (
     <Link href={`/profile/${user.id}`} className='flex  gap-x-4'>
       <div className=' h-9 w-9 relative flex-grow-0 flex flex-col'>
@@ -26,31 +63,29 @@ const SearchResultCard = ({ user }) => {
           </div>
 
           <Button
-            className='text-white font-bold bg-transparent hover:bg-inherit hover:text-white rounded-lg border-neutral-600/70 shadow-md'
+            onClick={handleFollowUnfollow}
+            className={cn(
+              "text-white font-bold bg-transparent hover:bg-inherit hover:text-white rounded-lg border-neutral-600/70 shadow-md",
+              user.user_isFollowing &&
+                "text-neutral-600  hover:text-neutral-600",
+              user.id === currentUser.id && "hidden"
+            )}
             size='sm'
             variant='outline'>
-            Follow
+            {loading ? (
+              <Loader className='animate-spin h-5 w-5' />
+            ) : user.user_isFollowing && !loading ? (
+              "Following"
+            ) : (
+              "Follow"
+            )}
           </Button>
         </div>
         <div className='flex justify-start space-x-2  items-center mt-2.5 pb-4  border-b  border-zinc-300/20'>
-          <div className='flex -space-x-2 items-center'>
-            <Image
-              alt='avatar'
-              src='/avatar.png'
-              width={25}
-              height={25}
-              className='h-5 w-5 border border-gray-300 object-cover rounded-full'
-            />
-            <Image
-              alt='avatar'
-              src='/avatar.png'
-              width={25}
-              height={25}
-              className='h-5 w-5 border border-gray-300 object-cover rounded-full'
-            />
-          </div>
-
-          <span className='text-white text-sm font-normal'>{user.followers.length} followers</span>
+    
+          <span className='text-white text-sm font-normal'>
+            {user.followersCount} follower{user.followersCount > 1 ? "s" : ""}
+          </span>
         </div>
       </div>
     </Link>
