@@ -5,21 +5,36 @@ import { Search, XCircle } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import SearchResultCard from "./SearchResultCard";
+import { experimental_useOptimistic as useOptimistic } from "react";
 
 const SearchInput = ({ users, currentUser }) => {
   const [query, setQuery] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
+  const [optimisticUsers, addOptimisticUsers] = useOptimistic(
+    users,
+    (currentOptimisticUsers, newUser) => {
+      const newOptimisticUsers = [...currentOptimisticUsers];
+      const index = newOptimisticUsers.findIndex(
+        (user) => user.id === newUser.id
+      );
+
+      newOptimisticUsers[index] = newUser;
+      return newOptimisticUsers;
+    }
+  );
 
   const debounced = useDebouncedCallback((value) => {
     filterUsers(value);
   }, 200);
 
   useEffect(() => {
-    setFilteredUsers(users);
-  }, [users]);
+    setFilteredUsers(optimisticUsers);
+  }, [optimisticUsers]);
 
   const filterUsers = (searchTerm) => {
-    const filtered = users.filter((user) => user.username.includes(searchTerm));
+    const filtered = optimisticUsers.filter((user) =>
+      user.username.includes(searchTerm)
+    );
     setFilteredUsers(filtered);
   };
 
@@ -31,7 +46,7 @@ const SearchInput = ({ users, currentUser }) => {
 
   const handleCancel = () => {
     setQuery("");
-    setFilteredUsers(users);
+    setFilteredUsers(optimisticUsers);
   };
   return (
     <div className='items-center  space-y-4 w-full'>
@@ -56,7 +71,12 @@ const SearchInput = ({ users, currentUser }) => {
 
       <div className='py-3 space-y-4'>
         {filteredUsers.map((user) => (
-          <SearchResultCard key={user.id} user={user} currentUser={currentUser} />
+          <SearchResultCard
+            key={user.id}
+            user={user}
+            currentUser={currentUser}
+            addOptimisticUsers={addOptimisticUsers}
+          />
         ))}
       </div>
     </div>

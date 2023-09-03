@@ -10,36 +10,38 @@ import { handleFollowingUser } from "@/lib/followUnfollowUser";
 import { toast } from "sonner";
 import { Loader } from "lucide-react";
 
-const SearchResultCard = ({ user, currentUser }) => {
-  const [loading, setLoading] = useState(false);
+const SearchResultCard = ({ user, currentUser, addOptimisticUsers }) => {
+  // const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleFollowUnfollow = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    // setLoading(true);
     try {
       if (user.user_isFollowing) {
-        // Remove the currentUser.id from user.followers
-        const index = user.followers.indexOf(currentUser.id);
-        if (index !== -1) {
-          user.followers.splice(index, 1);
-        }
+        addOptimisticUsers({
+          ...user,
+          user_isFollowing: !user.user_isFollowing,
+          followersCount: user.followersCount - 1,
+        });
         await handleFollowingUser(user.id, "unfollow");
       } else {
-        user.followers.push(currentUser.id);
+        addOptimisticUsers({
+          ...user,
+          user_isFollowing: !user.user_isFollowing,
+          followersCount: user.followersCount + 1,
+        });
         await handleFollowingUser(user.id, "follow");
       }
     } catch (error) {
       toast.error("Failed to complete request");
     } finally {
-      setLoading(false);
+      // setLoading(false);
       router.refresh();
     }
   };
 
-  
   console.log(user);
-
 
   return (
     <Link href={`/profile/${user.id}`} className='flex  gap-x-4'>
@@ -72,17 +74,10 @@ const SearchResultCard = ({ user, currentUser }) => {
             )}
             size='sm'
             variant='outline'>
-            {loading ? (
-              <Loader className='animate-spin h-5 w-5' />
-            ) : user.user_isFollowing && !loading ? (
-              "Following"
-            ) : (
-              "Follow"
-            )}
+            {user.user_isFollowing ? "Following" : "Follow"}
           </Button>
         </div>
         <div className='flex justify-start space-x-2  items-center mt-2.5 pb-4  border-b  border-zinc-300/20'>
-    
           <span className='text-white text-sm font-normal'>
             {user.followersCount} follower{user.followersCount > 1 ? "s" : ""}
           </span>
