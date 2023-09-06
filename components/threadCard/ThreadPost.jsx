@@ -45,7 +45,7 @@ const ThreadPost = ({ threads, user }) => {
                 className='object-cover rounded-full'
               />
             </Link>
-            <div className='relative mt-2 w-0.5 grow rounded-full bg-neutral-800' />
+            <div className='relative mt-2 w-0.5 grow rounded-full dark:bg-neutral-800 bg-neutral-300' />
           </div>
           <div className='flex flex-col w-full pr-3'>
             <Link href={`/thread/${thread.id}`}>
@@ -59,7 +59,7 @@ const ThreadPost = ({ threads, user }) => {
                 </div>
               </div>
               <div className='flex flex-col mt-2'>
-                <p className='text-white whitespace-pre-wrap text-sm'>
+                <p className='dark:text-white whitespace-pre-wrap text-sm text-gray-700 font-medium'>
                   {thread.thread}
                 </p>
                 {thread.attachments.length > 0 && (

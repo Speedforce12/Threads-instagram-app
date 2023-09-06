@@ -38,8 +38,8 @@ const FollowButton = ({ user, addOptimisticUsers, currentUser }) => {
     <Button
       onClick={handleFollowUnfollow}
       className={cn(
-        "text-white font-bold bg-transparent hover:bg-inherit hover:text-white rounded-lg border-neutral-600/70 shadow-md",
-        user.user_isFollowing && "text-neutral-600  hover:text-neutral-600",
+        " dark:shadow-md shadow font-bold bg-transparent hover:bg-inherit  hover:text-white rounded-lg border-neutral-600/70",
+        user.user_isFollowing ? "text-neutral-600  hover:text-neutral-600" : "dark:text-white text-black hover:text-black",
         user.id === currentUser.id && "hidden"
       )}
       size='sm'

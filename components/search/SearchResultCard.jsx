@@ -18,10 +18,10 @@ const SearchResultCard = ({ user, currentUser, addOptimisticUsers }) => {
       <div className='flex flex-col  w-full'>
         <div className='flex items-center justify-between'>
           <div className='flex flex-col'>
-            <span className='font-bold text-sm text-white hover:underline hover:underline-offset-2'>
+            <span className='font-bold text-sm dark:text-white text-gray-800 hover:underline hover:underline-offset-2'>
               {user.username}
             </span>
-            <span className='font-medium text-sm  text-neutral-600'>
+            <span className='font-medium text-sm  text-neutral-400 dark:text-neutral-600'>
               {user.username}
             </span>
           </div>
@@ -33,7 +33,7 @@ const SearchResultCard = ({ user, currentUser, addOptimisticUsers }) => {
           />
         </div>
         <div className='flex justify-start space-x-2  items-center mt-2.5 pb-4  border-b  border-zinc-300/20'>
-          <span className='text-white text-sm font-normal'>
+          <span className='dark:text-white text-neutral-400 text-sm font-normal'>
             {user.followersCount} follower{user.followersCount > 1 ? "s" : ""}
           </span>
         </div>

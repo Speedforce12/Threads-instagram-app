@@ -34,12 +34,15 @@ const LikeHeart = ({ thread, user, addOptimisticThread }) => {
 
   return (
     <div
-      className='rounded-full h-8 w-8 hover:bg-neutral-800 cursor-pointer flex items-center justify-center group'
+      className='rounded-full h-8 w-8 dark:hover:bg-neutral-800 hover:bg-neutral-300 cursor-pointer flex items-center justify-center group'
       onClick={handleLikeUnlike}>
       {thread.user_liked_thread ? (
         <FaHeart size={18} className='  text-rose-500' />
       ) : (
-        <FaRegHeart size={18} className=' group-hover:fill-rose-500' />
+        <FaRegHeart
+          size={18}
+          className=' group-hover:fill-rose-500 dark:text-white text-gray-500'
+        />
       )}
     </div>
   );

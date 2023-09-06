@@ -30,7 +30,7 @@ const ThreadPage = async ({ params }) => {
               />
             </div>
             <Link
-              href={`profile/${thread.creator.id}`}
+              href={`/profile/${thread.creator.id}`}
               className='font-bold text-sm text-white hover:underline'>
               {thread.creator.username}
             </Link>

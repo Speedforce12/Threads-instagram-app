@@ -6,7 +6,7 @@ import FollowButton from "./FollowButton";
 const SuggestedFollow = ({ suggestion, addOptimisticUsers, currentUser }) => {
   console.log(suggestion)
   return (
-    <div className='flex items-center justify-between w-full hover:bg-neutral-900 p-2 rounded-md'>
+    <div className='flex items-center justify-between w-full dark:hover:bg-neutral-900 hover:bg-neutral-300 p-2 rounded-md cursor-pointer'>
       <Link href={`/profile/${suggestion.id}`} className='flex items-center gap-2'>
         <div className='h-10 w-10 relative'>
           <Image
@@ -17,10 +17,10 @@ const SuggestedFollow = ({ suggestion, addOptimisticUsers, currentUser }) => {
           />
         </div>
         <div>
-          <p className='text-white font-bold text-sm hover:underline'>
+          <p className='dark:text-white text-gray-800 font-bold text-sm hover:underline'>
             {suggestion.username}
           </p>
-          <p className='text-muted/70 font-extralight text-xs'>
+          <p className='dark:text-muted/30 text-gray-400 dark:font-extralight font-medium text-xs'>
             @{suggestion.username}
           </p>
         </div>

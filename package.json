@@ -29,6 +29,7 @@
     "lucide-react": "^0.268.0",
     "moment": "^2.29.4",
     "next": "^13.4.19",
+    "next-themes": "^0.2.1",
     "postcss": "8.4.28",
     "prisma": "^5.2.0",
     "react": "^18.2.0",

@@ -22,8 +22,11 @@ const Share = ({ threadId }) => {
   };
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className='rounded-full h-8 w-8 hover:bg-neutral-800 cursor-pointer flex items-center justify-center group'>
-        <Send size={18} className='group-hover:text-sky-600' />
+      <DropdownMenuTrigger className='rounded-full h-8 w-8 dark:hover:bg-neutral-800 hover:bg-neutral-300 cursor-pointer flex items-center justify-center group'>
+        <Send
+          size={18}
+          className='dark:group-hover:text-sky-600 text-sky-400 dark:text-white'
+        />
       </DropdownMenuTrigger>
       <DropdownMenuContent className='bg-black text-white'>
         <DropdownMenuItem

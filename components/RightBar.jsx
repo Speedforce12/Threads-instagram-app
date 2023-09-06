@@ -37,7 +37,7 @@ const RightBar = ({ suggestions, currentUser }) => {
             </p>
             <Link
               href='/people'
-              className='text-white font-medium text-sm hover:text-neutral-600 transition-colors duration-300  mr-6'>
+              className='dark:text-white text-neutral-400 font-medium text-sm hover:text-neutral-600 transition-colors duration-300  mr-6'>
               See All
             </Link>
           </li>

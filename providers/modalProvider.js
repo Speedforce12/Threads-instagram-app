@@ -1,7 +1,6 @@
 "use client";
 
 import ReplyModal from "@/components/modal/ReplyModal";
-import ShareThreadModal from "@/components/modal/ShareThreadModal";
 import { useEffect, useState } from "react";
 
 const ModalProvider = () => {
@@ -17,7 +16,6 @@ const ModalProvider = () => {
   return (
     <>
       <ReplyModal />
-      <ShareThreadModal />
     </>
   );
 };

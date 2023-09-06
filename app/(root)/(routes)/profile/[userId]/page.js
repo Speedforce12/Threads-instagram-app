@@ -48,7 +48,7 @@ const ProfilePage = async ({ params }) => {
             src={profile.image}
             alt={profile.username}
             fill
-            className='object-contain'
+            className='object-contain rounded-full'
           />
         </div>
       </div>

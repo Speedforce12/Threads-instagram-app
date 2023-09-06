@@ -87,7 +87,7 @@ const ThreadForm = ({ user }) => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <div className='flex flex-col space-y-3 border-b border-gray-100/50'>
+                <div className='flex flex-col space-y-3 border-b dark:border-gray-100/50 border-gray-400'>
                   <div className='flex w-full items-center justify-between'>
                     <div className='flex items-center space-x-2'>
                       <div className='h-10 w-10 relative'>
@@ -98,7 +98,7 @@ const ThreadForm = ({ user }) => {
                           className='rounded-full'
                         />
                       </div>
-                      <p className='text-white text-sm font-medium'>
+                      <p className='dark:text-white text-sm font-medium text-black'>
                         {user.username}
                       </p>
                     </div>
@@ -106,14 +106,14 @@ const ThreadForm = ({ user }) => {
                       type='submit'
                       size='sm'
                       disabled={isDisabled || field.value === ""}
-                      className='rounded-lg bg-black border border-neutral-500 py-2 font-bold text-white'>
+                      className='rounded-lg dark:bg-black bg-transparent border dark:border-neutral-500 border-neutral-800 py-2 font-bold dark:text-white text-black'>
                       Post
                     </Button>
                   </div>
                   <Textarea
                     ref={textbox}
                     rows={1}
-                    className='min-h-[40px] resize-none border-none bg-transparent p-2 text-base font-medium text-white   focus-visible:ring-0 focus-visible:ring-offset-0'
+                    className='min-h-[40px] resize-none border-none bg-transparent p-2 text-base font-medium dark:text-white text-black   focus-visible:ring-0 focus-visible:ring-offset-0'
                     placeholder='Start a thread...'
                     value={field.value}
                     onChange={(e) => handleInputChange(e, field.onChange)}
