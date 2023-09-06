@@ -4,9 +4,10 @@ import Link from "next/link";
 import FollowButton from "./FollowButton";
 
 const SuggestedFollow = ({ suggestion, addOptimisticUsers, currentUser }) => {
+  console.log(suggestion)
   return (
     <div className='flex items-center justify-between w-full hover:bg-neutral-900 p-2 rounded-md'>
-      <Link href='profile/user' className='flex items-center gap-2'>
+      <Link href={`/profile/${suggestion.id}`} className='flex items-center gap-2'>
         <div className='h-10 w-10 relative'>
           <Image
             src={suggestion.image}

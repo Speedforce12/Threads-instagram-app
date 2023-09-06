@@ -10,7 +10,7 @@ const LikesReplyInfo = ({ comments, threadId, likes }) => {
           <Image
             key={i}
             alt='avatar'
-            src={comment.creator.image}
+            src={comment.creator?.image}
             width={25}
             height={25}
             className='h-5 w-5 border border-gray-300 object-cover rounded-full'

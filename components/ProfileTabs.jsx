@@ -1,7 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { profileTabs } from "@/constants/constant";
+import ThreadPost from "./threadCard/ThreadPost";
 
-const ProfileTabs = () => {
+const ProfileTabs = ({profile}) => {
   return (
     <div className='text-white my-8 w-full px-4'>
       <Tabs defaultValue='Threads'>
@@ -14,10 +15,9 @@ const ProfileTabs = () => {
               {tab.name}
             </TabsTrigger>
           ))}
-        
         </TabsList>
-        <TabsContent value='account'>
-          Make changes to your account here.
+        <TabsContent value='Threads'>
+          <ThreadPost threads={profile.threads} user={profile} />
         </TabsContent>
         <TabsContent value='password'>Change your password here.</TabsContent>
       </Tabs>

@@ -31,7 +31,7 @@ const ThreadPost = ({ threads, user }) => {
   );
 
   return optimisticThreads.map((thread) => (
-    <article className='border-t border-white/20' key={thread.id}>
+    <article className='border-b border-white/20' key={thread.id}>
       <div className='flex w-full px-3  flex-col py-3'>
         <div className='flex md:gap-x-3 space-x-1.5'>
           <div className='flex items-center flex-col'>
@@ -40,7 +40,7 @@ const ThreadPost = ({ threads, user }) => {
               className='relative h-8 w-8'>
               <Image
                 alt=''
-                src={thread.creator.image}
+                src={thread.creator?.image}
                 fill
                 className='object-cover rounded-full'
               />
@@ -50,7 +50,7 @@ const ThreadPost = ({ threads, user }) => {
           <div className='flex flex-col w-full pr-3'>
             <Link href={`/thread/${thread.id}`}>
               <div className='flex w-full justify-between items-center'>
-                <p className='text-sm text-white'>{thread.creator.username}</p>
+                <p className='text-sm text-white'>{thread.creator?.username}</p>
                 <div className='flex items-center justify-between gap-x-2 '>
                   <span className='text-sm text-neutral-400 font-medium '>
                     {moment(thread.createdAt).fromNow(true)}
