@@ -10,6 +10,9 @@ import { experimental_useOptimistic as useOptimistic } from "react";
 const SearchInput = ({ users, currentUser }) => {
   const [query, setQuery] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
+
+
+  // make following users appear instant(optimistic UI method)
   const [optimisticUsers, addOptimisticUsers] = useOptimistic(
     users,
     (currentOptimisticUsers, newUser) => {
@@ -23,14 +26,17 @@ const SearchInput = ({ users, currentUser }) => {
     }
   );
 
+  // debounce the user input 
   const debounced = useDebouncedCallback((value) => {
     filterUsers(value);
   }, 200);
+
 
   useEffect(() => {
     setFilteredUsers(optimisticUsers);
   }, [optimisticUsers]);
 
+  // filter the users base on the user input
   const filterUsers = (searchTerm) => {
     const filtered = optimisticUsers.filter((user) =>
       user.username.includes(searchTerm)
@@ -38,12 +44,14 @@ const SearchInput = ({ users, currentUser }) => {
     setFilteredUsers(filtered);
   };
 
+  // handles search as named
   const handleSearch = (e) => {
     const newQuery = e.target.value;
     setQuery(newQuery);
     debounced(newQuery);
   };
 
+  // reset the input field 
   const handleCancel = () => {
     setQuery("");
     setFilteredUsers(optimisticUsers);

@@ -14,9 +14,6 @@ const SearchPage = async () => {
   }));
 
 
-  // console.log(newUsers);
-
-
   return (
     <div className=' mt-8 flex flex-col  p-3'>
       <SearchInput users={newUsers} currentUser={user} />
