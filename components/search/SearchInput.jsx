@@ -62,7 +62,7 @@ const SearchInput = ({ users, currentUser }) => {
         <Search className='text-gray-500' size={20} />
         <Input
           type='text'
-          className='bg-transparent focus-visible:ring-0 border-none focus-visible:ring-black focus-visible:ring-offset-0 text-white placeholder:text-gray-500'
+          className='bg-transparent focus-visible:ring-0 border-none focus-visible:ring-black focus-visible:ring-offset-0 dark:text-white text-black placeholder:text-gray-500'
           value={query}
           autoFocus
           onChange={handleSearch}

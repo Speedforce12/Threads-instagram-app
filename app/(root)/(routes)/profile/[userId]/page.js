@@ -71,7 +71,7 @@ const ProfilePage = async ({ params }) => {
         </div>
 
         <div className='flex items-center space-x-2'>
-          <Link href={`https://instagram.com/${"speedter_dee"}`}>
+          <Link href={`https://instagram.com/${"speedster_dee"}`}>
             <Instagram className='text-white' />
           </Link>
         </div>
@@ -81,13 +81,13 @@ const ProfilePage = async ({ params }) => {
         <div className='flex items-center justify-between mx-auto gap-4'>
           <Button
             variant='outline'
-            className='text-white bg-black w-40 py-1 font-semibold'>
+            className='text-black bg-white border-white/50 hover:text-white hover:bg-black hover:bg-transparent  w-40 py-1 font-bold'>
             Edit profile
           </Button>
 
           <Button
             variant='outline'
-            className='text-white bg-black w-40 py-1 font-semibold'>
+            className='text-black bg-white border-white/50 hover:text-white hover:bg-black hover:bg-transparent  w-40 py-1 font-bold'>
             Share
           </Button>
         </div>

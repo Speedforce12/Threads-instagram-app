@@ -1,6 +1,7 @@
 "use client";
 
 import { useTheme } from "next-themes";
+import {BiMenuAltRight} from "react-icons/bi"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Menu } from "lucide-react";
+import { SignOutButton } from "@clerk/nextjs";
 
 const MoreOptions = () => {
   const { theme, setTheme } = useTheme();
@@ -24,9 +26,8 @@ const MoreOptions = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className='mb-3 w-full  flex cursor-pointer space-x-2 rounded-md px-2 py-2.5 items-center dark:text-white text-black dark:hover:bg-neutral-800 hover:bg-neutral-300 '>
-        <Menu className='h-8 w-8 ' />
-        <p className='text-sm font-medium'>More</p>
+      <DropdownMenuTrigger className='mb-3 w-full  flex cursor-pointer  rounded-md px-2 py-2.5 items-center hover:text-black text-neutral-400 dark:hover:text-white'>
+        <BiMenuAltRight className='h-8 w-8 ' />
       </DropdownMenuTrigger>
       <DropdownMenuContent className='bg-black text-white border-neutral-500'>
         <DropdownMenuItem
@@ -47,7 +48,7 @@ const MoreOptions = () => {
         <DropdownMenuSeparator className='bg-neutral-800' />
 
         <DropdownMenuItem className='focus:bg-black focus:text-white cursor-pointer'>
-          Log out
+          <SignOutButton>Log out</SignOutButton>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

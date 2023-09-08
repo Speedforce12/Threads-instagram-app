@@ -11,6 +11,7 @@ import ModalProvider from "@/providers/modalProvider";
 import { fetchSuggestedUsers } from "@/lib/fetchSuggestions";
 import { ThemeProvider } from "@/providers/themeprovider";
 import { cn } from "@/lib/utils";
+import TopBar from "@/components/TopBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,20 +27,21 @@ export default async function RootLayout({ children }) {
   return (
     <ClerkProvider>
       <html lang='en' suppressHydrationWarning>
-        <body className={cn("dark:bg-black text-white")}>
+        <body className={cn("dark:bg-[#10101299] text-white")}>
           <ThemeProvider>
             <NavBar />
             <ModalProvider />
             <ToastProvider />
-            <div className='flex flex-row'>
-              <Sidebar userId={user?.id} userImage={user?.image} />
+            <div className='max-w-7xl mx-auto'>
+              {/* <Sidebar userId={user?.id} userImage={user?.image} /> */}
+              <TopBar userId={user?.id} userImage={user?.image} />
               <main className='flex min-h-screen flex-1 flex-col items-center overflow-auto'>
-                <section className='w-full max-w-xl'>{children}</section>
+                <section className='w-full max-w-2xl'>{children}</section>
               </main>
-              <RightBar suggestions={suggestions} currentUser={user} />
+              {/* <RightBar suggestions={suggestions} currentUser={user} /> */}
             </div>
 
-            <BottomBar />
+            <BottomBar userId={user?.id} userImage={user?.image} />
           </ThemeProvider>
         </body>
       </html>

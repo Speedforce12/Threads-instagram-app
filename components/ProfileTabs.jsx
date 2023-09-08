@@ -2,7 +2,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { profileTabs } from "@/constants/constant";
 import ThreadPost from "./threadCard/ThreadPost";
 
-const ProfileTabs = ({profile}) => {
+const ProfileTabs = ({ profile }) => {
+  
+  console.log(profile.comments)
   return (
     <div className='text-white my-8 w-full px-4'>
       <Tabs defaultValue='Threads'>

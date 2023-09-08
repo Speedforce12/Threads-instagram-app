@@ -13,9 +13,8 @@ const ThreadPage = async ({ params }) => {
   const thread = await fetchThread(threadId);
   const user = await fetchUser();
 
-  console.log(thread);
   return (
-    <div className='flex flex-col px-3 sm:px-0'>
+    <div className='flex flex-col px-3 sm:px-0 mt-5'>
       <BackArrow />
 
       <div className='my-2 flex justify-start flex-col'>
