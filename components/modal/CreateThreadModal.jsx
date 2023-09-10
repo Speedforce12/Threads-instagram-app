@@ -84,12 +84,8 @@ const CreateThreadModal = () => {
     <div className='flex flex-col'>
       <Dialog open={isModalOpen} onOpenChange={onClose}>
         <DialogContent className='bg-black text-white max-w-xl p-2'>
-          <DialogHeader>
-            <DialogTitle>
-              <div className='text-center flex w-full items-center justify-center'>
-                New Thread
-              </div>
-            </DialogTitle>
+          <DialogHeader className='space-y-0 text-center sm:text-center'>
+            <DialogTitle>New Thread</DialogTitle>
           </DialogHeader>
           <div className='p-5'>
             <Form {...form}>
@@ -164,7 +160,7 @@ const CreateThreadModal = () => {
                   />
                 </div>
                 <DialogFooter className='pt-7'>
-                  <div className='flex items-center justify-between  w-full'>
+                  <div className='flex items-center justify-between  md:w-full w-4/5'>
                     <FormField
                       control={form.control}
                       name='replyStatus'

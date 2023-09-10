@@ -41,7 +41,7 @@ export default async function RootLayout({ children }) {
               {/* <RightBar suggestions={suggestions} currentUser={user} /> */}
             </div>
 
-            <BottomBar userId={user?.id} userImage={user?.image} />
+            <BottomBar userId={user?.id} userImage={user?.image} user={user} />
           </ThemeProvider>
         </body>
       </html>
