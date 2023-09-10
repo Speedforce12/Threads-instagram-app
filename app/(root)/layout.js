@@ -34,7 +34,7 @@ export default async function RootLayout({ children }) {
             <ToastProvider />
             <div className='max-w-7xl mx-auto'>
               {/* <Sidebar userId={user?.id} userImage={user?.image} /> */}
-              <TopBar userId={user?.id} userImage={user?.image} />
+              <TopBar userId={user?.id} userImage={user?.image} user={user} />
               <main className='flex min-h-screen flex-1 flex-col items-center overflow-auto'>
                 <section className='w-full max-w-2xl'>{children}</section>
               </main>

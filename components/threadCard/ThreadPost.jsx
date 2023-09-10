@@ -48,9 +48,9 @@ const ThreadPost = ({ threads, user }) => {
             <div className='relative mt-2 w-0.5 grow rounded-full dark:bg-neutral-800 bg-neutral-300' />
           </div>
           <div className='flex flex-col w-full pr-3'>
-            <Link href={`/thread/${thread.id}`}>
+            <div>
               <div className='flex w-full justify-between items-center'>
-                <p className='text-sm text-white'>{thread.creator?.username}</p>
+                <Link href={`/profile/${thread.creatorId}`} className='text-sm text-white'>{thread.creator?.username}</Link>
                 <div className='flex items-center justify-between gap-x-2 '>
                   <span className='text-sm text-neutral-400 font-medium '>
                     {moment(thread.createdAt).fromNow(true)}
@@ -58,7 +58,7 @@ const ThreadPost = ({ threads, user }) => {
                   <ThreadOptions user={user} thread={thread} />
                 </div>
               </div>
-              <div className='flex flex-col mt-2'>
+              <Link href={`/thread/${thread.id}`} className='flex flex-col mt-2'>
                 <p className='dark:text-white whitespace-pre-wrap text-sm text-gray-700 font-medium'>
                   {thread.thread}
                 </p>
@@ -67,8 +67,8 @@ const ThreadPost = ({ threads, user }) => {
                     <MediaViewer media={thread.attachments} />
                   </div>
                 )}
-              </div>
-            </Link>
+              </Link>
+            </div>
             <section className='flex items-center text-white gap-3 mt-4'>
               <LikeHeart
                 thread={thread}

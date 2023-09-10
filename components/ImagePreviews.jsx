@@ -18,7 +18,7 @@ const ImagePreviews = ({ media, onChange, setMedias }) => {
   };
 
   return (
-    <div className='mx-auto container mt-3 sm:mt-0'>
+    <div className='mx-auto mt-3 w-full'>
       <Swiper
         modules={[Navigation]}
         breakpoints={{
@@ -30,19 +30,19 @@ const ImagePreviews = ({ media, onChange, setMedias }) => {
         {media.map((media, i) => (
           <div
             key={`${media.url}-${Date.now()}`}
-            className='aspect-square relative h-full w-full shadow-sm overflow-hidden'>
+            className='shadow-sm overflow-hidden'>
             {media.type.includes("image/") ? (
               <>
                 <SwiperSlide>
-                  <div className='aspect-square relative h-full w-full shadow-sm overflow-hidden'>
+                  <div className='relative h-72 w-auto shadow-sm overflow-hidden'>
                     <Image
                       alt={media.url}
                       src={media.url}
                       fill
-                      className='object-contain rounded-md'
+                      className='object-contain rounded-md h-full w-full'
                     />
                     <div
-                      className='absolute top-1 right-2 rounded-full h-8 w-8 flex items-center justify-center hover:bg-gray-700 cursor-pointer bg-gray-800'
+                      className='absolute md:top-5 md:right-4 top-1/2  rounded-full h-8 w-8 flex items-center justify-center hover:bg-black cursor-pointer bg-black/70'
                       onClick={() => removeMedia(i)}>
                       <X className='text-white h-5 w-5' />
                     </div>
@@ -52,7 +52,7 @@ const ImagePreviews = ({ media, onChange, setMedias }) => {
             ) : (
               <>
                 <SwiperSlide>
-                  <div className='aspect-square relative h-full w-full shadow-sm overflow-hidden'>
+                  <div className='h-72 w-auto shadow-sm overflow-hidden'>
                     <video
                       controls
                       autoPlay

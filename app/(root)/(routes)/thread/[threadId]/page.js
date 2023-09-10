@@ -48,7 +48,7 @@ const ThreadPage = async ({ params }) => {
             {thread.thread}
           </p>
           {thread.attachments.length > 0 && (
-            <div className='my-3 w-[90%]'>
+            <div className='my-3 w-[80%]'>
               <MediaViewer media={thread.attachments} />
             </div>
           )}

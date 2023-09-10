@@ -1,5 +1,6 @@
 "use client";
 
+import CreateThreadModal from "@/components/modal/CreateThreadModal";
 import ReplyModal from "@/components/modal/ReplyModal";
 import { useEffect, useState } from "react";
 
@@ -15,6 +16,7 @@ const ModalProvider = () => {
   }
   return (
     <>
+      <CreateThreadModal />
       <ReplyModal />
     </>
   );

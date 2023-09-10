@@ -6,9 +6,9 @@ import NavItem from "./NavItem";
 import { GoHome, GoHomeFill } from "react-icons/go";
 import { Search } from "lucide-react";
 import { FaHeart, FaRegHeart, FaSearch } from "react-icons/fa";
-import { TbSquareRoundedPlus, TbSquareRoundedPlusFilled } from "react-icons/tb";
+import CreateButton from "./CreateButton";
 
-const TopBar = ({ userId, userImage }) => {
+const TopBar = ({ userId, userImage, user }) => {
   return (
     <div className='top-0 sticky z-40 dark:bg-[#10101299] bg-[#fbfbfe99]  backdrop-blur-xl backdrop-filter hidden md:block'>
       <div className='flex items-center justify-between h-16'>
@@ -29,11 +29,7 @@ const TopBar = ({ userId, userImage }) => {
             activeIcon={<FaSearch />}
             route={"/search"}
           />
-          <NavItem
-            icon={<TbSquareRoundedPlus />}
-            activeIcon={<TbSquareRoundedPlusFilled />}
-            route={"/search"}
-          />
+          <CreateButton user={user} />
           <NavItem
             icon={<FaRegHeart />}
             activeIcon={<FaHeart />}

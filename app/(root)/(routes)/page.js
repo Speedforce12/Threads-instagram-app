@@ -20,7 +20,7 @@ export default async function Home() {
   }));
 
   return (
-    <div className='flex flex-col flex-1 md:mt-14 mt-10 w-full mx-auto px-7'>
+    <div className='flex flex-col flex-1 mt-3 w-full mx-auto px-7'>
       <div className='p-3 mb-5'>
         <ThreadForm user={user} />
       </div>
