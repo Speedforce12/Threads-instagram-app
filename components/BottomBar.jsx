@@ -1,9 +1,7 @@
 "use client";
 
-import { routes } from "@/constants/constant";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import NavItem from "./NavItem";
 import CreateButton from "./CreateButton";
 import { FaHeart, FaRegHeart, FaSearch } from "react-icons/fa";
@@ -12,7 +10,7 @@ import { Search } from "lucide-react";
 
 const BottomBar = ({ userId, userImage, user }) => {
   return (
-    <div className='fixed bottom-0 left-0 right-0 z-30 flex w-full flex-1 bg-[#10101299] px-3 opacity-80 backdrop-blur-lg backdrop-filter md:hidden'>
+    <div className='fixed bottom-0 left-0 right-0 z-30 flex w-full flex-1 dark:bg-[#10101299] bg-[#fbfbfe99] px-3  backdrop-blur-xl backdrop-filter md:hidden'>
       <div className='flex w-full items-center justify-between space-x-2'>
         <NavItem icon={<GoHome />} activeIcon={<GoHomeFill />} route={"/"} />
         <NavItem
